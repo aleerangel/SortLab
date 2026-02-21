@@ -16,7 +16,7 @@ Mais do que apenas implementar algoritmos, o foco está na construção de uma *
 ## 🧠 Estrutura do Projeto
 
 ```
-meu-visualizador-ordenacao/
+SortLab/
 ├── src/
 │   ├── Main.java
 │   │
