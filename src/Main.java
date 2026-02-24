@@ -1,4 +1,5 @@
 import algorithms.BubbleSort;
+import algorithms.SelectionSort;
 import core.SortingAlgorithm;
 import core.StepAction;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class Main {
     public static void main(String[] args) {
         int[] vetorTeste = {5, 2, 9, 1, 5, 6};
 
-        SortingAlgorithm algoritmo = new BubbleSort(vetorTeste);
+        SortingAlgorithm algoritmo = new SelectionSort(vetorTeste);
 
         System.out.println("Vetor Inicial: " + Arrays.toString(vetorTeste));
         System.out.println("--------------------------------------------------");
