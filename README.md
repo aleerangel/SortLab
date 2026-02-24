@@ -26,8 +26,7 @@ SortLab/
 │   │
 │   ├── algorithms/
 │   │   ├── BubbleSort.java
-│   │   ├── QuickSort.java        (em desenvolvimento)
-│   │   └── MergeSort.java        (em desenvolvimento)
+│   │   ├── SelectionSort.java
 │   │
 │   └── ui/
 │       ├── VisualizerFrame.java
@@ -58,9 +57,8 @@ Implementações concretas dos algoritmos.
 
 Atualmente:
 
-- ✔ Bubble Sort (implementado passo a passo)
-- 🔄 Quick Sort (planejado)
-- 🔄 Merge Sort (planejado)
+- ✔ Bubble Sort
+- ✔ Selection Sort
 
 Cada algoritmo executa **uma única ação por chamada de `nextStep()`**, permitindo controle total da animação.
 
@@ -123,7 +121,7 @@ java -cp out Main
 
 - ✔ Estrutura base definida
 - ✔ Máquina de estados implementada
-- ✔ Bubble Sort passo a passo funcional
+- ✔ Bubble Sort e Selection Sort passo a passo funcional
 - 🔄 Interface gráfica em desenvolvimento
 - 🔄 Novos algoritmos em planejamento
 
