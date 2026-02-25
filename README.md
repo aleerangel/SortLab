@@ -73,8 +73,6 @@ Cada algoritmo executa **uma única ação por chamada de `nextStep()`**, permit
 ### 🖥️ ui
 Camada responsável pela visualização gráfica utilizando Swing:
 
-Camada responsável pela interface gráfica utilizando Swing:
-
 - `MainFrame` → Janela principal da aplicação
 - `SortingPanel` → Painel responsável por desenhar o vetor como barras verticais
 
@@ -111,7 +109,6 @@ Este projeto foi desenvolvido durante o período de férias com o objetivo de:
 
 O desenvolvimento seguirá em fases, evoluindo para:
 
-- Seleção dinâmica de algoritmo
 - Execução automática com controle de velocidade
 - Métricas (comparações, trocas, tempo)
 - Mais algoritmos (Insertion, Merge, Quick, etc.)
