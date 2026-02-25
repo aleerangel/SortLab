@@ -35,8 +35,8 @@ SortLab/
 │   │   ├── SelectionSort.java
 │   │
 │   └── ui/
-│       ├── VisualizerFrame.java
-│       └── ArrayPanel.java
+│       ├── MainFrame.java
+│       └── SortingPanel.java
 │
 └── README.md
 ```
@@ -73,10 +73,18 @@ Cada algoritmo executa **uma única ação por chamada de `nextStep()`**, permit
 ### 🖥️ ui
 Camada responsável pela visualização gráfica utilizando Swing:
 
-- `VisualizerFrame` → Janela principal
-- `ArrayPanel` → Painel que desenha as barras do vetor
+Camada responsável pela interface gráfica utilizando Swing:
 
-A UI consulta o estado atual do algoritmo e redesenha a cada passo.
+- `MainFrame` → Janela principal da aplicação
+- `SortingPanel` → Painel responsável por desenhar o vetor como barras verticais
+
+A interface consulta:
+
+- `getArray()`
+- `getActiveIndices()`
+- `getCurrentAction()`
+
+E redesenha a cada passo executado.
 
 ---
 
@@ -101,7 +109,12 @@ Este projeto foi desenvolvido durante o período de férias com o objetivo de:
 - Explorar arquitetura limpa em aplicações Java
 - Evoluir progressivamente para uma ferramenta mais robusta
 
-O desenvolvimento seguirá em fases, começando pela implementação básica do Bubble Sort e evoluindo para múltiplos algoritmos, controle de velocidade, métricas e melhorias arquiteturais.
+O desenvolvimento seguirá em fases, evoluindo para:
+
+- Seleção dinâmica de algoritmo
+- Execução automática com controle de velocidade
+- Métricas (comparações, trocas, tempo)
+- Mais algoritmos (Insertion, Merge, Quick, etc.)
 
 ---
 
@@ -126,9 +139,17 @@ java -cp out Main
 ## 📌 Status Atual
 
 - ✔ Estrutura base definida
+
 - ✔ Máquina de estados implementada
-- ✔ Bubble Sort e Selection Sort passo a passo funcional
-- 🔄 Interface gráfica em desenvolvimento
+
+- ✔ Bubble Sort funcional
+
+- ✔ Selection Sort funcional
+
+- ✔ Interface gráfica básica implementada
+
+- 🔄 Melhorias visuais em andamento
+
 - 🔄 Novos algoritmos em planejamento
 
 ---
