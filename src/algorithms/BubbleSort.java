@@ -65,7 +65,7 @@ public class BubbleSort implements SortingAlgorithm {
     @Override 
     public int[] getActiveIndices() {
         if(finished) {
-            return new int[]{-1, -1};
+            return new int[]{};
         }
         return new int[]{j, j + 1};
     }
