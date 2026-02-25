@@ -3,11 +3,13 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 import algorithms.BubbleSort;
+import algorithms.SelectionSort;
 import core.SortingAlgorithm;
 
 public class MainFrame extends JFrame {
     private SortingAlgorithm algorithm;
     private SortingPanel panel;
+    private JComboBox<String> algorithmSelector;
 
     public MainFrame() {
         setTitle("SortLab");
@@ -15,9 +17,14 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        int[] array = generateRandomArray(50);
+        algorithmSelector = new JComboBox<>();
+        algorithmSelector.addItem("Bubble Sort");
+        algorithmSelector.addItem("Selection Sort");
 
-        algorithm = new BubbleSort(array);
+        int[] array = generateRandomArray(50);
+        String selected = (String) algorithmSelector.getSelectedItem();
+        algorithm = createAlgorithm(selected, array);
+
         panel = new SortingPanel(algorithm);
 
         JButton nextButton = new JButton("New step");
@@ -28,17 +35,32 @@ public class MainFrame extends JFrame {
 
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> {
-            algorithm = new BubbleSort(generateRandomArray(50));
+            int[] newArray = generateRandomArray(50);
+
+            String selectedAlgorithm = (String) algorithmSelector.getSelectedItem();
+            algorithm = createAlgorithm(selectedAlgorithm, newArray);
             panel.setAlgorithm(algorithm);
         });
 
         JPanel controls = new JPanel();
+        controls.add(algorithmSelector);
         controls.add(nextButton);
         controls.add(resetButton);
 
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
         add(controls, BorderLayout.SOUTH);
+    }
+
+    private SortingAlgorithm createAlgorithm(String name, int[] array) {
+        switch(name) {
+            case "Bubble Sort":
+                return new BubbleSort(array);
+            case "Selection Sort":
+                return new SelectionSort(array);
+            default:
+                throw new IllegalArgumentException("Algoritmo desconhecido");
+        }
     }
 
     private int[] generateRandomArray(int size) {
