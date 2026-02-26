@@ -10,6 +10,8 @@ public class MainFrame extends JFrame {
     private SortingAlgorithm algorithm;
     private SortingPanel panel;
     private JComboBox<String> algorithmSelector;
+    private Timer timer;
+    private boolean running = false;
 
     public MainFrame() {
         setTitle("SortLab");
@@ -27,14 +29,36 @@ public class MainFrame extends JFrame {
 
         panel = new SortingPanel(algorithm);
 
-        JButton nextButton = new JButton("New step");
-        nextButton.addActionListener(e -> {
-            algorithm.nextStep();
-            panel.repaint();
+        timer = new Timer(200, e -> {
+            if(!algorithm.isFinished()) {
+                algorithm.nextStep();
+                panel.repaint();
+            } else {
+                timer.stop();
+                running = false;
+            }
+        });
+
+
+        JButton playButton = new JButton("Play");
+        playButton.addActionListener( e-> {
+            if(!running) {
+                timer.start();
+                running = true;
+            }
+        });
+
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.addActionListener(e-> {
+            timer.stop();
+            running = false;
         });
 
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> {
+            timer.stop();
+            running = false;
+
             int[] newArray = generateRandomArray(50);
 
             String selectedAlgorithm = (String) algorithmSelector.getSelectedItem();
@@ -42,10 +66,27 @@ public class MainFrame extends JFrame {
             panel.setAlgorithm(algorithm);
         });
 
+        JSlider speedSlider = new JSlider(1, 200, 50);
+        speedSlider.setMajorTickSpacing(50);
+        speedSlider.setMinorTickSpacing(10);
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintLabels(true);
+        speedSlider.addChangeListener(e -> {
+            int min = speedSlider.getMinimum();
+            int max = speedSlider.getMaximum();
+            int value = speedSlider.getValue();
+
+            int inverted = max - value + min;
+
+            timer.setDelay(inverted);
+        });
+
         JPanel controls = new JPanel();
         controls.add(algorithmSelector);
-        controls.add(nextButton);
+        controls.add(playButton);
+        controls.add(pauseButton);
         controls.add(resetButton);
+        controls.add(speedSlider);
 
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
