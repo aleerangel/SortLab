@@ -2,8 +2,7 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
-import algorithms.BubbleSort;
-import algorithms.SelectionSort;
+import algorithms.*;
 import core.SortingAlgorithm;
 
 public class MainFrame extends JFrame {
@@ -22,6 +21,7 @@ public class MainFrame extends JFrame {
         algorithmSelector = new JComboBox<>();
         algorithmSelector.addItem("Bubble Sort");
         algorithmSelector.addItem("Selection Sort");
+        algorithmSelector.addItem("Insertion Sort");
 
         int[] array = generateRandomArray(50);
         String selected = (String) algorithmSelector.getSelectedItem();
@@ -99,6 +99,8 @@ public class MainFrame extends JFrame {
                 return new BubbleSort(array);
             case "Selection Sort":
                 return new SelectionSort(array);
+            case "Insertion Sort":
+                return new InsertionSort(array);
             default:
                 throw new IllegalArgumentException("Algoritmo desconhecido");
         }
