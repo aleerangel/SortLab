@@ -33,6 +33,7 @@ SortLab/
 │   ├── algorithms/
 │   │   ├── BubbleSort.java
 │   │   ├── SelectionSort.java
+│   │   ├── InsertionSort.java
 │   │
 │   └── ui/
 │       ├── MainFrame.java
@@ -65,6 +66,7 @@ Atualmente:
 
 - ✔ Bubble Sort
 - ✔ Selection Sort
+- ✔ Insertion Sort
 
 Cada algoritmo executa **uma única ação por chamada de `nextStep()`**, permitindo controle total da animação.
 
@@ -139,9 +141,7 @@ java -cp out Main
 
 - ✔ Máquina de estados implementada
 
-- ✔ Bubble Sort funcional
-
-- ✔ Selection Sort funcional
+- ✔ Bubble, Selection e Insertion funcionais
 
 - ✔ Interface gráfica básica implementada
 
