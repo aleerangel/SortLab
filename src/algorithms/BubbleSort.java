@@ -8,16 +8,22 @@ public class BubbleSort implements SortingAlgorithm {
     private int i = 0;
     private int j = 0;
     private boolean finished = false;
+    private boolean[] sorted;
 
-    private StepAction currentAction = StepAction.COMPARANDO;
+    private StepAction currentAction = StepAction.INICIADO;
 
     public BubbleSort(int[] array) {
         this.array = array.clone();
+        sorted = new boolean[array.length];
     }
 
     @Override 
     public void nextStep() {
         if(finished) return;
+        if(currentAction == StepAction.INICIADO) {
+            currentAction = StepAction.COMPARANDO;
+            return;
+        }
 
         if(currentAction == StepAction.COMPARANDO) {
             if(array[j] > array[j + 1]) {
@@ -40,6 +46,7 @@ public class BubbleSort implements SortingAlgorithm {
         if(j >= array.length - 1 - i) {
             j = 0;
             i++;
+            sorted[array.length - i] = true;
         }
         if(i >= array.length - 1) {
             finished = true;
@@ -68,6 +75,11 @@ public class BubbleSort implements SortingAlgorithm {
             return new int[]{};
         }
         return new int[]{j, j + 1};
+    }
+    
+    @Override 
+    public boolean[] getSortedIndices() {
+        return sorted;
     }
 }
 

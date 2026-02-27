@@ -9,16 +9,22 @@ public class SelectionSort implements SortingAlgorithm {
     private int j = 1;
     private int minIndex = 0;
     private boolean finished = false;
+    private boolean[] sorted;
 
-    private StepAction currentAction = StepAction.COMPARANDO;
+    private StepAction currentAction = StepAction.INICIADO;
 
     public SelectionSort(int[] array) {
         this.array = array.clone();
+        sorted = new boolean[array.length];
     }
 
     @Override
     public void nextStep() {
         if(finished) return;
+        if(currentAction == StepAction.INICIADO) {
+            currentAction = StepAction.COMPARANDO;
+            return;
+        }
 
         if(currentAction == StepAction.COMPARANDO) {
             if(j < array.length && array[j] < array[minIndex]) {
@@ -32,6 +38,8 @@ public class SelectionSort implements SortingAlgorithm {
             int temp = array[i];
             array[i] = array[minIndex];
             array[minIndex] = temp;
+
+            sorted[i] = true;
 
             i++;
             j = i + 1;
@@ -80,5 +88,10 @@ public class SelectionSort implements SortingAlgorithm {
         }
         
         return new int[]{};
+    }
+
+    @Override 
+    public boolean[] getSortedIndices() {
+        return sorted;
     }
 }

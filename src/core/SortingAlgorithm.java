@@ -6,4 +6,5 @@ public interface SortingAlgorithm {
     int[] getArray();
     StepAction getCurrentAction();
     int[] getActiveIndices();
+    boolean[] getSortedIndices();
 }

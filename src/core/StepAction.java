@@ -1,5 +1,5 @@
 package core;
 
 public enum StepAction {
-    COMPARANDO, TROCANDO, FINALIZADO
+    INICIADO, COMPARANDO, TROCANDO, FINALIZADO
 }
