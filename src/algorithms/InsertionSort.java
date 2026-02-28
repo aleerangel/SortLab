@@ -13,12 +13,14 @@ public class InsertionSort implements SortingAlgorithm {
     private boolean finished = false;
     private StepAction currentAction = StepAction.INICIADO;
     private int[] activeIndices;
-    private boolean[] sorted;
+    private boolean[] partiallySorted;
+    private boolean[] fullySorted;
 
     public InsertionSort(int[] array) {
         activeIndices = new int[2];
         this.array = array;
-        this.sorted = new boolean[array.length];
+        this.partiallySorted = new boolean[array.length];
+        this.fullySorted = new boolean[array.length];
     }
 
     @Override
@@ -27,6 +29,11 @@ public class InsertionSort implements SortingAlgorithm {
 
         if(i >= array.length) {
             currentAction = StepAction.FINALIZADO;
+
+            for(int k = 0; k < fullySorted.length; k++) {
+                fullySorted[k] = true;
+            }
+
             finished = true;
             return;
         }
@@ -57,6 +64,9 @@ public class InsertionSort implements SortingAlgorithm {
         }
 
         array[j + 1] = chave;
+        for(int k = 0; k < i; k++) {
+            partiallySorted[k] = true;
+        }
         i++;
         iniciandoIteracao = true;
         currentAction = StepAction.COMPARANDO;
@@ -81,9 +91,14 @@ public class InsertionSort implements SortingAlgorithm {
     public int[] getActiveIndices() {
         return activeIndices;
     }
+    
+    @Override
+    public boolean[] getPartiallySortedIndices() {
+        return partiallySorted;
+    }
 
     @Override 
-    public boolean[] getSortedIndices() {
-        return sorted;
+    public boolean[] getFullySortedIndices() {
+        return fullySorted;
     }
 }

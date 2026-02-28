@@ -57,8 +57,14 @@ public class SelectionSort implements SortingAlgorithm {
         }
 
         if(i >= array.length - 1) {
-            finished = true;
             currentAction = StepAction.FINALIZADO;
+
+            for(int k = 0; k < sorted.length; k++) {
+                sorted[k] = true;
+            }
+
+            finished = true;
+            return;
         }
     }
 
@@ -90,8 +96,13 @@ public class SelectionSort implements SortingAlgorithm {
         return new int[]{};
     }
 
+    @Override
+    public boolean[] getPartiallySortedIndices() {
+        return new boolean[array.length];
+    }
+
     @Override 
-    public boolean[] getSortedIndices() {
+    public boolean[] getFullySortedIndices() {
         return sorted;
     }
 }

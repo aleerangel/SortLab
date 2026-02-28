@@ -27,7 +27,8 @@ public class SortingPanel extends JPanel {
         int[] array = algorithm.getArray();
         int[] active = algorithm.getActiveIndices();
         StepAction action = algorithm.getCurrentAction();
-        boolean[] sorted = algorithm.getSortedIndices();
+        boolean[] partial = algorithm.getPartiallySortedIndices();
+        boolean[] full = algorithm.getFullySortedIndices();
 
         int width = getWidth();
         int height = getHeight();
@@ -47,18 +48,24 @@ public class SortingPanel extends JPanel {
 
             Color barColor = Color.WHITE;
 
-            if(action == StepAction.FINALIZADO || sorted[i]) {
-                barColor = Color.GREEN;
-            } else {
+            if(active != null) {
                 for(int idx : active) {
                     if(i == idx) {
                         if(action == StepAction.COMPARANDO) {
-                        barColor = Color.RED;
-                    } else if(action == StepAction.TROCANDO) {
-                        barColor = Color.ORANGE;
-                    }
+                            barColor = Color.RED;
+                        } else if (action == StepAction.TROCANDO) {
+                            barColor = Color.ORANGE;
+                        }
                     }
                 }
+            }
+
+            if(barColor == Color.WHITE && full[i]) {
+                barColor = Color.GREEN;
+            }
+
+            if(barColor == Color.WHITE && partial[i]) {
+                barColor = Color.BLUE;
             }
 
             g.setColor(barColor);

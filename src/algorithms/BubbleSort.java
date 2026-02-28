@@ -49,8 +49,14 @@ public class BubbleSort implements SortingAlgorithm {
             sorted[array.length - i] = true;
         }
         if(i >= array.length - 1) {
-            finished = true;
             currentAction = StepAction.FINALIZADO;
+
+            for(int k = 0; k < sorted.length; k++) {
+                sorted[k] = true;
+            }
+
+            finished = true;
+            return;
         }
     }
 
@@ -77,8 +83,13 @@ public class BubbleSort implements SortingAlgorithm {
         return new int[]{j, j + 1};
     }
     
+    @Override
+    public boolean[] getPartiallySortedIndices() {
+        return new boolean[array.length];
+    }
+
     @Override 
-    public boolean[] getSortedIndices() {
+    public boolean[] getFullySortedIndices() {
         return sorted;
     }
 }
