@@ -96,7 +96,7 @@ E redesenha a cada passo executado.
 | Máquina de Estados | Controle de execução via enum `StepAction` |
 | Arquitetura em Camadas | Separação entre núcleo lógico (`core`), algoritmos e interface |
 | Execução Passo a Passo | Método `nextStep()` permite simulação controlada |
-| Clonagem de Dados | Preservação do vetor original ao iniciar algoritmo |
+
 
 ---
 
