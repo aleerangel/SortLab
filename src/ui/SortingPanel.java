@@ -33,8 +33,6 @@ public class SortingPanel extends JPanel {
         int width = getWidth();
         int height = getHeight();
 
-        int barWidth = width / array.length;
-
         int max = 0;
         for(int value : array) {
             if(value > max) max = value;
@@ -70,8 +68,12 @@ public class SortingPanel extends JPanel {
 
             g.setColor(barColor);
 
+            int x1 = (int) ((double) i / array.length * width);
+            int x2 = (int) ((double) (i + 1) / array.length * width);
+            int barWidth = x2 - x1;
+
             g.fillRect(
-                i * barWidth,
+                x1,
                 height - barHeight,
                 barWidth - 2,
                 barHeight

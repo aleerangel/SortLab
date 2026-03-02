@@ -64,7 +64,7 @@ public class InsertionSort implements SortingAlgorithm {
         }
 
         array[j + 1] = chave;
-        for(int k = 0; k < i; k++) {
+        for(int k = 0; k <= i; k++) {
             partiallySorted[k] = true;
         }
         i++;
