@@ -17,59 +17,63 @@ public class InsertionSort implements SortingAlgorithm {
     private boolean[] fullySorted;
 
     public InsertionSort(int[] array) {
-        activeIndices = new int[2];
-        this.array = array;
+        this.array = array.clone();
         this.partiallySorted = new boolean[array.length];
         this.fullySorted = new boolean[array.length];
+        this.activeIndices = new int[] {-1, -1};
+        j = i - 1;
+        chave = array[i];
     }
 
     @Override
     public void nextStep() {
         if(finished) return;
 
+        if(currentAction == StepAction.INICIADO) {
+            currentAction = StepAction.COMPARANDO;
+            activeIndices = new int[] {j, i};
+            return;
+        }
+
         if(i >= array.length) {
-            currentAction = StepAction.FINALIZADO;
-
-            for(int k = 0; k < fullySorted.length; k++) {
-                fullySorted[k] = true;
-            }
-
-            finished = true;
+            finalizar();
             return;
         }
 
-        if(iniciandoIteracao) {
-            chave = array[i];
-            j = i - 1;
-            iniciandoIteracao = false;
-            return;
-        }
-
-        if(j >= 0 && array[j] > chave) {
-            if(!mostrandoComparacao) {
-                currentAction = StepAction.COMPARANDO;
-                activeIndices[0] = j;
-                activeIndices[1] = i;
-                mostrandoComparacao = true;
-                return;
+        if(currentAction == StepAction.COMPARANDO) {
+            if(j >= 0 && array[j] > chave) {
+                currentAction = StepAction.TROCANDO;
+                activeIndices = new int[]{j, j + 1};
+            } else {
+                array[j + 1] = chave;
+                for(int k = 0; k < i; k++) {
+                    partiallySorted[k] = true;
+                }
+                i++;
+                if(i < array.length) {
+                    j = i - 1;
+                    chave = array[i];
+                    currentAction = StepAction.COMPARANDO;
+                    activeIndices = new int[] {j, i};
+                } else {
+                    finalizar();
+                }
             }
-
-            currentAction = StepAction.TROCANDO;
-            activeIndices[0] = j;
-            activeIndices[1] = j + 1;
+        } else if (currentAction == StepAction.TROCANDO) {
             array[j + 1] = array[j];
             j--;
-            mostrandoComparacao = false;
-            return;
+            currentAction = StepAction.COMPARANDO;
+            activeIndices = new int[] {j, i};
         }
+    }
 
-        array[j + 1] = chave;
-        for(int k = 0; k <= i; k++) {
-            partiallySorted[k] = true;
+    private void finalizar() {
+        for(int k = 0; k < fullySorted.length; k++) {
+            fullySorted[k] = true;
         }
-        i++;
-        iniciandoIteracao = true;
-        currentAction = StepAction.COMPARANDO;
+        currentAction = StepAction.FINALIZADO;
+        finished = true;
+        activeIndices = new int[]{};
     }
 
     @Override 

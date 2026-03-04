@@ -45,8 +45,8 @@ public class BubbleSort implements SortingAlgorithm {
         j++;
         if(j >= array.length - 1 - i) {
             j = 0;
+            sorted[array.length - 1 - i] = true;
             i++;
-            sorted[array.length - i] = true;
         }
         if(i >= array.length - 1) {
             currentAction = StepAction.FINALIZADO;

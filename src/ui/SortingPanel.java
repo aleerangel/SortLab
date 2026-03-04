@@ -48,7 +48,7 @@ public class SortingPanel extends JPanel {
 
             if(active != null) {
                 for(int idx : active) {
-                    if(i == idx) {
+                    if(idx >= 0 && idx < array.length && i == idx) {
                         if(action == StepAction.COMPARANDO) {
                             barColor = Color.RED;
                         } else if (action == StepAction.TROCANDO) {

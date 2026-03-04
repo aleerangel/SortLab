@@ -6,23 +6,28 @@ import core.StepAction;
 public class SelectionSort implements SortingAlgorithm {
     private int[] array;
     private int i = 0;
-    private int j = 1;
-    private int minIndex = 0;
+    private int j;
+    private int minIndex;
     private boolean finished = false;
     private boolean[] sorted;
-
     private StepAction currentAction = StepAction.INICIADO;
+    private int[] activeIndices;
 
     public SelectionSort(int[] array) {
         this.array = array.clone();
         sorted = new boolean[array.length];
+        activeIndices = new int[2];
+        j = i + 1;
+        minIndex = i;
     }
 
     @Override
     public void nextStep() {
         if(finished) return;
+
         if(currentAction == StepAction.INICIADO) {
             currentAction = StepAction.COMPARANDO;
+            activeIndices = new int[]{j, minIndex};
             return;
         }
 
@@ -33,7 +38,12 @@ public class SelectionSort implements SortingAlgorithm {
 
             j++;
 
-            avancar();
+            if(j < array.length) {
+                activeIndices = new int[]{j, minIndex};
+            } else {
+                currentAction = StepAction.TROCANDO;
+                activeIndices = new int[]{j, minIndex};
+            }
         } else if (currentAction == StepAction.TROCANDO) {
             int temp = array[i];
             array[i] = array[minIndex];
@@ -42,29 +52,19 @@ public class SelectionSort implements SortingAlgorithm {
             sorted[i] = true;
 
             i++;
-            j = i + 1;
-            minIndex = i;
-
-            currentAction = StepAction.COMPARANDO;
-
-            avancar();
-        }
-    }
-
-    public void avancar() {
-        if(j >= array.length) {
-            currentAction = StepAction.TROCANDO;
-        }
-
-        if(i >= array.length - 1) {
-            currentAction = StepAction.FINALIZADO;
-
-            for(int k = 0; k < sorted.length; k++) {
-                sorted[k] = true;
+            if(i < array.length - 1) {
+                j = i + 1;
+                minIndex = i;
+                currentAction = StepAction.COMPARANDO;
+                activeIndices = new int[]{j, minIndex};
+            } else {
+                for(int k = 0; k < sorted.length; k++) {
+                    sorted[k] = true;
+                }
+                currentAction = StepAction.FINALIZADO;
+                finished = true;
+                activeIndices = new int[]{};
             }
-
-            finished = true;
-            return;
         }
     }
 
@@ -83,17 +83,9 @@ public class SelectionSort implements SortingAlgorithm {
         return currentAction;
     }
 
-    @Override 
+    @Override
     public int[] getActiveIndices() {
-        if(currentAction == StepAction.COMPARANDO) {
-            return new int[]{j, minIndex};
-        }
-        
-        if(currentAction == StepAction.TROCANDO) {
-            return new int[]{i, minIndex};
-        }
-        
-        return new int[]{};
+        return activeIndices;
     }
 
     @Override
