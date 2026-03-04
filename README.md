@@ -119,19 +119,57 @@ O desenvolvimento seguirá em fases, evoluindo para:
 
 ## ⚙️ Como Compilar e Executar
 
-### 1️⃣ Compilar o Código
+Este projeto utiliza **Makefile** para automatizar a compilação e execução.
 
-No terminal, na raiz do projeto:
+### ✅ 1️⃣ Compilar
 
-```bash
-javac -d out src/**/*.java
-```
-
-### 2️⃣ Executar
+Na raiz do projeto:
 
 ```bash
-java -cp out Main
+make
 ```
+
+ou
+
+```bash
+make compile
+```
+
+Isso irá:
+
+- Criar o diretório `bin/` (caso não exista)
+- Compilar todos os arquivos `.java`
+
+---
+
+### ▶ 2️⃣ Executar
+
+```bash
+make run
+```
+
+O comando irá:
+
+- Compilar automaticamente (caso necessário)
+- Executar a classe `Main`
+
+---
+
+### 🧹 3️⃣ Limpar Arquivos Compilados
+
+```bash
+make clean
+```
+
+Remove completamente o diretório `bin/`.
+
+---
+
+### 💡 Observação
+
+O `Makefile` atual está configurado para ambiente Windows (uso de `dir`, `mkdir`, `rmdir`).
+
+Em sistemas Linux/macOS será necessário adaptar os comandos.
 
 ---
 
