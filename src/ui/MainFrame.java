@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
         algorithmSelector.addItem("Bubble Sort");
         algorithmSelector.addItem("Selection Sort");
         algorithmSelector.addItem("Insertion Sort");
+        algorithmSelector.addItem("Merge Sort");
 
         int[] array = generateRandomArray(50);
         String selected = (String) algorithmSelector.getSelectedItem();
@@ -101,6 +102,8 @@ public class MainFrame extends JFrame {
                 return new SelectionSort(array);
             case "Insertion Sort":
                 return new InsertionSort(array);
+            case "Merge Sort":
+                return new MergeSort(array);
             default:
                 throw new IllegalArgumentException("Algoritmo desconhecido");
         }
