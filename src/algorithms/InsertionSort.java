@@ -46,7 +46,7 @@ public class InsertionSort implements SortingAlgorithm {
                 activeIndices = new int[]{j, j + 1};
             } else {
                 array[j + 1] = chave;
-                for(int k = 0; k < i; k++) {
+                for(int k = 0; k <= i + 1; k++) {
                     partiallySorted[k] = true;
                 }
                 i++;
@@ -104,5 +104,20 @@ public class InsertionSort implements SortingAlgorithm {
     @Override 
     public boolean[] getFullySortedIndices() {
         return fullySorted;
+    }
+
+    @Override 
+    public boolean hasFloatingKey() {
+        return !finished && i < array.length;
+    }
+
+    @Override
+    public int getFloatingKeyValue() {
+        return chave;
+    }
+
+    @Override
+    public int getFloatingKeyIndex() {
+        return i;
     }
 }
