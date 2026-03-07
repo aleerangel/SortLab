@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import algorithms.*;
 import core.SortingAlgorithm;
+import util.ArrayGenerator;
+import java.util.Hashtable;
 
 public class MainFrame extends JFrame {
     private SortingAlgorithm algorithm;
     private SortingPanel panel;
     private JComboBox<String> algorithmSelector;
+    private JComboBox<String> arrayTypeSelector;
     private Timer timer;
     private boolean running = false;
 
@@ -24,7 +27,14 @@ public class MainFrame extends JFrame {
         algorithmSelector.addItem("Insertion Sort");
         algorithmSelector.addItem("Merge Sort");
 
-        int[] array = generateRandomArray(50);
+        arrayTypeSelector = new JComboBox<>();
+        arrayTypeSelector.addItem("Aleatorio");
+        arrayTypeSelector.addItem("Crescente");
+        arrayTypeSelector.addItem("Decrescente");
+
+        String selectedType = (String) arrayTypeSelector.getSelectedItem();
+        int[] array = ArrayGenerator.generateArray(50, selectedType);
+
         String selected = (String) algorithmSelector.getSelectedItem();
         algorithm = createAlgorithm(selected, array);
 
@@ -60,34 +70,45 @@ public class MainFrame extends JFrame {
             timer.stop();
             running = false;
 
-            int[] newArray = generateRandomArray(50);
+            String currentType = (String) arrayTypeSelector.getSelectedItem();
+            int[] newArray = ArrayGenerator.generateArray(50, currentType);
 
             String selectedAlgorithm = (String) algorithmSelector.getSelectedItem();
             algorithm = createAlgorithm(selectedAlgorithm, newArray);
             panel.setAlgorithm(algorithm);
         });
 
-        JSlider speedSlider = new JSlider(1, 200, 50);
-        speedSlider.setMajorTickSpacing(50);
-        speedSlider.setMinorTickSpacing(10);
+        JSlider speedSlider = new JSlider(1, 500, 200);
+        speedSlider.setMajorTickSpacing(100);
+        speedSlider.setMinorTickSpacing(25);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
+
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
+        labelTable.put(1, new JLabel("1"));
+        labelTable.put(100, new JLabel("100"));
+        labelTable.put(200, new JLabel("200"));
+        labelTable.put(300, new JLabel("300"));
+        labelTable.put(400, new JLabel("400"));
+        labelTable.put(500, new JLabel("500"));
+        speedSlider.setLabelTable(labelTable);
+
         speedSlider.addChangeListener(e -> {
-            int min = speedSlider.getMinimum();
-            int max = speedSlider.getMaximum();
-            int value = speedSlider.getValue();
-
-            int inverted = max - value + min;
-
-            timer.setDelay(inverted);
+            int delay = speedSlider.getValue();
+            timer.setDelay(delay);
         });
+
+        JPanel speedPanel = new JPanel(new BorderLayout());
+        speedPanel.add(new JLabel("Delay (ms)", SwingConstants.CENTER), BorderLayout.NORTH);
+        speedPanel.add(speedSlider, BorderLayout.CENTER);
 
         JPanel controls = new JPanel();
         controls.add(algorithmSelector);
+        controls.add(arrayTypeSelector);
         controls.add(playButton);
         controls.add(pauseButton);
         controls.add(resetButton);
-        controls.add(speedSlider);
+        controls.add(speedPanel);
 
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
@@ -107,13 +128,5 @@ public class MainFrame extends JFrame {
             default:
                 throw new IllegalArgumentException("Algoritmo desconhecido");
         }
-    }
-
-    private int[] generateRandomArray(int size) {
-        int[] array = new int[size];
-        for(int i = 0; i < size; i++) {
-            array[i] = (int) (Math.random() * 100) + 1;
-        }
-        return array;
     }
 }
