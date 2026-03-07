@@ -13,38 +13,40 @@ Este projeto está atualmente em fase ativa de desenvolvimento.
 
 Este repositório contém a implementação de um **Visualizador de Algoritmos de Ordenação** desenvolvido em Java.
 
-O projeto tem como objetivo simular **passo a passo** o funcionamento interno de algoritmos clássicos de ordenação, permitindo visualizar comparações e trocas em tempo real.
+O projeto tem como objetivo simular **passo a passo** o funcionamento interno de algoritmos clássicos de ordenação, permitindo visualizar comparações, trocas e movimentações de memória em tempo real.
 
-Mais do que apenas implementar algoritmos, o foco está na construção de uma **arquitetura organizada**, baseada em máquina de estados, separando claramente lógica, controle e interface gráfica.
+Mais do que apenas implementar algoritmos, o foco está na construção de uma **arquitetura organizada**, baseada em máquina de estados, separando claramente lógica, controle de tempo e interface gráfica.
 
 ---
 
 ## 🧠 Estrutura do Projeto
 
+A arquitetura foi desenhada em camadas para facilitar a expansão: 
+
 ```
 SortLab/
 ├── src/
-│   ├── Main.java
-│   │
+│   ├── algorithms/
+│   │   ├── BubbleSort.java
+│   │   ├── InsertionSort.java
+│   │   ├── MergeSort.java
+│   │   └── SelectionSort.java
 │   ├── core/
 │   │   ├── SortingAlgorithm.java
 │   │   └── StepAction.java
-│   │
-│   ├── algorithms/
-│   │   ├── BubbleSort.java
-│   │   ├── SelectionSort.java
-│   │   ├── InsertionSort.java
-│   │
-│   └── ui/
-│       ├── MainFrame.java
-│       └── SortingPanel.java
-│
+│   ├── ui/
+│   │   ├── MainFrame.java
+│   │   └── SortingPanel.java
+│   ├── util/
+│   │   └── LinkedStack.java
+│   └── Main.java
+│── Makefile
 └── README.md
 ```
 
 ---
 
-## 🔹 Camadas do Projeto
+## 🔹 Camadas e Funcionalidades
 
 ### 📦 core
 Contém o “coração” da aplicação:
@@ -66,12 +68,20 @@ Atualmente:
 
 - ✔ Bubble Sort
 - ✔ Selection Sort
-- ✔ Insertion Sort
+- ✔ Insertion Sort (com vsualização didática de chave flutuante)
+- ✔ Merge Sort (implementação iterativa utilizndo pilha explicita para simular a árvore de recursão frame a frame)
 
 Cada algoritmo executa **uma única ação por chamada de `nextStep()`**, permitindo controle total da animação.
 
 ---
 
+### 🛠️ util
+Estruturas de dados auxiliares construídas do zero:
+
+- `LinkedStack` → Pilha encadeada genérica utilizada para manter o estado da recursão em algoritmos complexos (como o Merge Sort) sem travar a interface gráfica.
+
+---
+  
 ### 🖥️ ui
 Camada responsável pela visualização gráfica utilizando Swing:
 
@@ -93,7 +103,9 @@ E redesenha a cada passo executado.
 | Categoria | Aplicação no Projeto |
 |------------|----------------------|
 | Programação Orientada a Objetos | Encapsulamento, interfaces e separação de responsabilidades |
+| Estrutura de Dados | Implementação e uso de Pilha  `LinkedStack` | 
 | Máquina de Estados | Controle de execução via enum `StepAction` |
+| Simulação de Recursão | Uso de pilha explícita para manter contexto de Call Stack | 
 | Arquitetura em Camadas | Separação entre núcleo lógico (`core`), algoritmos e interface |
 | Execução Passo a Passo | Método `nextStep()` permite simulação controlada |
 
@@ -109,11 +121,11 @@ Este projeto foi desenvolvido durante o período de férias com o objetivo de:
 - Explorar arquitetura limpa em aplicações Java
 - Evoluir progressivamente para uma ferramenta mais robusta
 
-O desenvolvimento seguirá em fases, evoluindo para:
+Próximos passos planejados:
 
-- Execução automática com controle de velocidade
 - Métricas (comparações, trocas, tempo)
-- Mais algoritmos (Insertion, Merge, Quick, etc.)
+- Refinamentos adicionais na UI
+- Novos algoritmos
 
 ---
 
@@ -179,7 +191,9 @@ Em sistemas Linux/macOS será necessário adaptar os comandos.
 
 - ✔ Máquina de estados implementada
 
-- ✔ Bubble, Selection e Insertion funcionais
+- ✔ Pilha para recursão implementada
+
+- ✔ Bubble, Selection, Insertion e Merge funcionais
 
 - ✔ Interface gráfica básica implementada
 
