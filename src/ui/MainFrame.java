@@ -12,6 +12,7 @@ public class MainFrame extends JFrame {
     private SortingPanel panel;
     private JComboBox<String> algorithmSelector;
     private JComboBox<String> arrayTypeSelector;
+    private JSpinner sizeSpinner;
     private JLabel comparisonsLabel;
     private JLabel swapsLabel;
     private Timer timer;
@@ -34,8 +35,16 @@ public class MainFrame extends JFrame {
         arrayTypeSelector.addItem("Crescente");
         arrayTypeSelector.addItem("Decrescente");
 
+        SpinnerModel sizeModel = new SpinnerNumberModel(50, 10, 200, 10);
+        sizeSpinner = new JSpinner(sizeModel);
+
+        JPanel sizePanel = new JPanel(new BorderLayout());
+        sizePanel.add(new JLabel("Tamanho (N)", SwingConstants.CENTER), BorderLayout.NORTH);
+        sizePanel.add(sizeSpinner, BorderLayout.CENTER);
+
         String selectedType = (String) arrayTypeSelector.getSelectedItem();
-        int[] array = ArrayGenerator.generateArray(50, selectedType);
+        int initialSize = (int) sizeSpinner.getValue();
+        int[] array = ArrayGenerator.generateArray(initialSize, selectedType);
 
         String selected = (String) algorithmSelector.getSelectedItem();
         algorithm = createAlgorithm(selected, array);
@@ -77,7 +86,8 @@ public class MainFrame extends JFrame {
             swapsLabel.setText("Trocas / Escritas: 0");
 
             String currentType = (String) arrayTypeSelector.getSelectedItem();
-            int[] newArray = ArrayGenerator.generateArray(50, currentType);
+            int currentSize = (int) sizeSpinner.getValue();
+            int[] newArray = ArrayGenerator.generateArray(currentSize, currentType);
 
             String selectedAlgorithm = (String) algorithmSelector.getSelectedItem();
             algorithm = createAlgorithm(selectedAlgorithm, newArray);
@@ -120,6 +130,7 @@ public class MainFrame extends JFrame {
         JPanel controls = new JPanel();
         controls.add(algorithmSelector);
         controls.add(arrayTypeSelector);
+        controls.add(sizePanel);
         controls.add(playButton);
         controls.add(pauseButton);
         controls.add(resetButton);
