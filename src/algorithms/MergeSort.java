@@ -10,7 +10,9 @@ public class MergeSort implements SortingAlgorithm {
     private StepAction currentAction;       
     private int[] activeIndices;            
     private boolean[] partiallySorted;      
-    private boolean[] fullySorted;          
+    private boolean[] fullySorted;     
+    private int comparisons = 0;
+    private int swaps = 0;     
 
     private LinkedStack<MergeFrame> stack;  
 
@@ -95,6 +97,7 @@ public class MergeSort implements SortingAlgorithm {
             if (frame.k < frame.temp.length) {
                 if (frame.i <= frame.mid && frame.j <= frame.right) {
                     activeIndices = new int[] {frame.i, frame.j};
+                    comparisons++;
                     if (array[frame.i] <= array[frame.j]) {
                         frame.temp[frame.k] = array[frame.i];
                         frame.i++;
@@ -125,7 +128,7 @@ public class MergeSort implements SortingAlgorithm {
             if (frame.copyIdx < frame.temp.length) {
                 int targetIndex = frame.left + frame.copyIdx;
                 array[targetIndex] = frame.temp[frame.copyIdx];
-                
+                swaps++;
                 activeIndices = new int[] {targetIndex};
                 currentAction = StepAction.TROCANDO; 
                 frame.copyIdx++;
@@ -181,5 +184,15 @@ public class MergeSort implements SortingAlgorithm {
     @Override
     public boolean[] getFullySortedIndices() {
         return fullySorted;
+    }
+
+    @Override
+    public int getComparisons() {
+        return comparisons;
+    }
+
+    @Override 
+    public int getSwaps() {
+        return swaps;
     }
 }

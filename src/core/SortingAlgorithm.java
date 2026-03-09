@@ -8,6 +8,8 @@ public interface SortingAlgorithm {
     int[] getActiveIndices();
     boolean[] getPartiallySortedIndices();
     boolean[] getFullySortedIndices();
+    int getComparisons();
+    int getSwaps();
     default boolean hasFloatingKey() {return false;}
     default int getFloatingKeyValue() {return 0;}
     default int getFloatingKeyIndex() {return -1;}

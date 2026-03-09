@@ -12,6 +12,8 @@ public class MainFrame extends JFrame {
     private SortingPanel panel;
     private JComboBox<String> algorithmSelector;
     private JComboBox<String> arrayTypeSelector;
+    private JLabel comparisonsLabel;
+    private JLabel swapsLabel;
     private Timer timer;
     private boolean running = false;
 
@@ -44,12 +46,13 @@ public class MainFrame extends JFrame {
             if(!algorithm.isFinished()) {
                 algorithm.nextStep();
                 panel.repaint();
+                comparisonsLabel.setText("Comparacoes: " + algorithm.getComparisons());
+                swapsLabel.setText("Trocas / Escritas: " + algorithm.getSwaps());
             } else {
                 timer.stop();
                 running = false;
             }
         });
-
 
         JButton playButton = new JButton("Play");
         playButton.addActionListener( e-> {
@@ -69,6 +72,9 @@ public class MainFrame extends JFrame {
         resetButton.addActionListener(e -> {
             timer.stop();
             running = false;
+
+            comparisonsLabel.setText("Comparacoes: 0");
+            swapsLabel.setText("Trocas / Escritas: 0");
 
             String currentType = (String) arrayTypeSelector.getSelectedItem();
             int[] newArray = ArrayGenerator.generateArray(50, currentType);
@@ -102,6 +108,15 @@ public class MainFrame extends JFrame {
         speedPanel.add(new JLabel("Delay (ms)", SwingConstants.CENTER), BorderLayout.NORTH);
         speedPanel.add(speedSlider, BorderLayout.CENTER);
 
+        comparisonsLabel = new JLabel("Comparacoes: 0");
+        comparisonsLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        swapsLabel = new JLabel("Trocas / Escritas : 0");
+        swapsLabel.setFont(new Font("Arial", Font.BOLD, 14));
+
+        JPanel metricsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
+        metricsPanel.add(comparisonsLabel);
+        metricsPanel.add(swapsLabel);
+
         JPanel controls = new JPanel();
         controls.add(algorithmSelector);
         controls.add(arrayTypeSelector);
@@ -111,6 +126,7 @@ public class MainFrame extends JFrame {
         controls.add(speedPanel);
 
         setLayout(new BorderLayout());
+        add(metricsPanel, BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
         add(controls, BorderLayout.SOUTH);
     }

@@ -15,6 +15,8 @@ public class InsertionSort implements SortingAlgorithm {
     private int[] activeIndices;
     private boolean[] partiallySorted;
     private boolean[] fullySorted;
+    private int comparisons = 0;
+    private int swaps = 0;
 
     public InsertionSort(int[] array) {
         this.array = array.clone();
@@ -41,12 +43,13 @@ public class InsertionSort implements SortingAlgorithm {
         }
 
         if(currentAction == StepAction.COMPARANDO) {
+            if(j > 0) comparisons++;
             if(j >= 0 && array[j] > chave) {
                 currentAction = StepAction.TROCANDO;
                 activeIndices = new int[]{j, j + 1};
             } else {
                 array[j + 1] = chave;
-                for(int k = 0; k <= i + 1; k++) {
+                for(int k = 0; k <= i; k++) {
                     partiallySorted[k] = true;
                 }
                 i++;
@@ -60,6 +63,7 @@ public class InsertionSort implements SortingAlgorithm {
                 }
             }
         } else if (currentAction == StepAction.TROCANDO) {
+            swaps++;
             array[j + 1] = array[j];
             j--;
             currentAction = StepAction.COMPARANDO;
@@ -119,5 +123,15 @@ public class InsertionSort implements SortingAlgorithm {
     @Override
     public int getFloatingKeyIndex() {
         return i;
+    }
+    
+    @Override
+    public int getComparisons() {
+        return comparisons;
+    }
+
+    @Override
+    public int getSwaps() {
+        return swaps;
     }
 }

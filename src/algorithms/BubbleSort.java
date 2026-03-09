@@ -9,6 +9,8 @@ public class BubbleSort implements SortingAlgorithm {
     private int j = 0;
     private boolean finished = false;
     private boolean[] sorted;
+    private int comparisons = 0;
+    private int swaps = 0;
 
     private StepAction currentAction = StepAction.INICIADO;
 
@@ -26,12 +28,14 @@ public class BubbleSort implements SortingAlgorithm {
         }
 
         if(currentAction == StepAction.COMPARANDO) {
+            comparisons++;
             if(array[j] > array[j + 1]) {
                 currentAction = StepAction.TROCANDO;
             } else {
                 avancar();
             }
         } else if (currentAction == StepAction.TROCANDO) {
+            swaps++;
             int temp = array[j];
             array[j] = array[j + 1];
             array[j + 1] = temp;
@@ -91,6 +95,16 @@ public class BubbleSort implements SortingAlgorithm {
     @Override 
     public boolean[] getFullySortedIndices() {
         return sorted;
+    }
+    
+    @Override 
+    public int getComparisons() {
+        return comparisons;
+    }
+
+    @Override 
+    public int getSwaps() {
+        return swaps;
     }
 }
 

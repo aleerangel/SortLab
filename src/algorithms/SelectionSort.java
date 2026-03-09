@@ -12,6 +12,8 @@ public class SelectionSort implements SortingAlgorithm {
     private boolean[] sorted;
     private StepAction currentAction = StepAction.INICIADO;
     private int[] activeIndices;
+    private int comparisons = 0;
+    private int swaps = 0;
 
     public SelectionSort(int[] array) {
         this.array = array.clone();
@@ -32,6 +34,7 @@ public class SelectionSort implements SortingAlgorithm {
         }
 
         if(currentAction == StepAction.COMPARANDO) {
+            comparisons++;
             if(j < array.length && array[j] < array[minIndex]) {
                 minIndex = j;   
             }
@@ -45,6 +48,7 @@ public class SelectionSort implements SortingAlgorithm {
                 activeIndices = new int[]{j, minIndex};
             }
         } else if (currentAction == StepAction.TROCANDO) {
+            swaps++;
             int temp = array[i];
             array[i] = array[minIndex];
             array[minIndex] = temp;
@@ -96,5 +100,15 @@ public class SelectionSort implements SortingAlgorithm {
     @Override 
     public boolean[] getFullySortedIndices() {
         return sorted;
+    }
+
+    @Override
+    public int getComparisons() {
+        return comparisons;
+    }
+
+    @Override
+    public int getSwaps() {
+        return swaps;
     }
 }
