@@ -22,6 +22,7 @@ public class ControlPanel extends JPanel {
         algorithmSelector.addItem("Insertion Sort");
         algorithmSelector.addItem("Shell Sort");
         algorithmSelector.addItem("Merge Sort");
+        algorithmSelector.addItem("Heap Sort");
 
         arrayTypeSelector = new JComboBox<>();
         arrayTypeSelector.addItem("Aleatorio");

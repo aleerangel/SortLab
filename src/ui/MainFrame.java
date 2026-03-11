@@ -87,6 +87,8 @@ public class MainFrame extends JFrame {
                 return new ShellSort(array);
             case "Merge Sort":
                 return new MergeSort(array);
+            case "Heap Sort":
+                return new HeapSort(array);
             default:
                 throw new IllegalArgumentException("Algoritmo desconhecido");
         }
