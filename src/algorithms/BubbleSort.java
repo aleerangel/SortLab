@@ -107,4 +107,3 @@ public class BubbleSort implements SortingAlgorithm {
         return swaps;
     }
 }
-
