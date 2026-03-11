@@ -17,6 +17,7 @@ public class ControlPanel extends JPanel {
     public ControlPanel() {
         algorithmSelector = new JComboBox<>();
         algorithmSelector.addItem("Bubble Sort");
+        algorithmSelector.addItem("Bubble Sort (Otimizado)");
         algorithmSelector.addItem("Selection Sort");
         algorithmSelector.addItem("Insertion Sort");
         algorithmSelector.addItem("Merge Sort");

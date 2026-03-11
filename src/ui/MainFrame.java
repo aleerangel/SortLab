@@ -77,6 +77,8 @@ public class MainFrame extends JFrame {
         switch(name) {
             case "Bubble Sort":
                 return new BubbleSort(array);
+            case "Bubble Sort (Otimizado)":
+                return new BubbleSortOtimizado(array);
             case "Selection Sort":
                 return new SelectionSort(array);
             case "Insertion Sort":
