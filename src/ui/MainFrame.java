@@ -85,10 +85,16 @@ public class MainFrame extends JFrame {
                 return new InsertionSort(array);
             case "Shell Sort":
                 return new ShellSort(array);
-            case "Merge Sort":
-                return new MergeSort(array);
             case "Heap Sort":
                 return new HeapSort(array);
+            case "Merge Sort":
+                return new MergeSort(array);
+            case "Quick Sort (Fim)":
+                return new QuickSort(array, PivotStrategy.LAST);
+            case "Quick Sort (Meio)":
+                return new QuickSort(array, PivotStrategy.MIDDLE);
+            case "Quick Sort (Med. de 3)":
+                return new QuickSort(array, PivotStrategy.MEDIAN_OF_THREE);
             default:
                 throw new IllegalArgumentException("Algoritmo desconhecido");
         }
