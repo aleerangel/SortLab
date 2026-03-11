@@ -136,7 +136,7 @@ public class ShellSort implements SortingAlgorithm {
 
     @Override
     public boolean hasFloatingKey(){
-        return !finished && i < array.length;
+        return !finished && gap == 1 && i < array.length;
     }
 
     @Override
