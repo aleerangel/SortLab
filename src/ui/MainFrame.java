@@ -83,6 +83,8 @@ public class MainFrame extends JFrame {
                 return new SelectionSort(array);
             case "Insertion Sort":
                 return new InsertionSort(array);
+            case "Shell Sort":
+                return new ShellSort(array);
             case "Merge Sort":
                 return new MergeSort(array);
             default:

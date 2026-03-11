@@ -68,11 +68,11 @@ public class BubbleSortOtimizado implements SortingAlgorithm {
     private void finalizar() {
         currentAction = StepAction.FINALIZADO;
 
-            for(int k = 0; k < sorted.length; k++) {
-                sorted[k] = true;
-            }
+        for(int k = 0; k < sorted.length; k++) {
+            sorted[k] = true;
+        }
 
-            finished = true;
+        finished = true;
     }
 
     @Override
