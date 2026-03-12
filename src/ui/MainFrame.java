@@ -99,6 +99,8 @@ public class MainFrame extends JFrame {
                 return new QuickSort(array, PivotStrategy.MIDDLE);
             case "Quick Sort (Med. de 3)":
                 return new QuickSort(array, PivotStrategy.MEDIAN_OF_THREE);
+            case "Bucket Sort":
+                return new BucketSort(array);
             case "Radix Sort":
                 return new RadixSort(array);
             default:

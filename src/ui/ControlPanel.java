@@ -28,6 +28,7 @@ public class ControlPanel extends JPanel {
         algorithmSelector.addItem("Quick Sort (Fim)");
         algorithmSelector.addItem("Quick Sort (Meio)");
         algorithmSelector.addItem("Quick Sort (Med. de 3)");
+        algorithmSelector.addItem("Bucket Sort");
         algorithmSelector.addItem("Radix Sort");
 
         arrayTypeSelector = new JComboBox<>();
