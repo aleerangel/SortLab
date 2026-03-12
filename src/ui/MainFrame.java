@@ -99,6 +99,8 @@ public class MainFrame extends JFrame {
                 return new QuickSort(array, PivotStrategy.MIDDLE);
             case "Quick Sort (Med. de 3)":
                 return new QuickSort(array, PivotStrategy.MEDIAN_OF_THREE);
+            case "Radix Sort":
+                return new RadixSort(array);
             default:
                 throw new IllegalArgumentException("Algoritmo desconhecido");
         }
