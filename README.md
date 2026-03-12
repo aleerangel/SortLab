@@ -1,54 +1,59 @@
-# 📊 Visualizador de Algoritmos de Ordenação - Java
+# 📊 SortLab - Visualizador de Algoritmos de Ordenação
 
 ![Language](https://img.shields.io/badge/Language-Java-orange.svg)
 ![GUI](https://img.shields.io/badge/GUI-Swing-blue.svg)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)
+![Status](https://img.shields.io/badge/Status-v1.0-brightgreen.svg)
 ![Project](https://img.shields.io/badge/Projeto-F%C3%A9rias-purple.svg)
 
-## 🚀 Em Desenvolvimento
+## 🚀 Versão 1.0!
 
-Este projeto está atualmente em fase ativa de desenvolvimento.
+Este repositório contém a implementação completa do **SortLab**, um **Visualizador de Algoritmos de Ordenação** desenvolvido em Java utilizando **Swing**.
 
----
-
-Este repositório contém a implementação de um **Visualizador de Algoritmos de Ordenação** desenvolvido em Java utilizando **Swing**.
-
-O objetivo do projeto é permitir a visualização **passo a passo** do funcionamento interno de algoritmos clássicos de ordenação, destacando operações como:
+O objetivo do projeto é permitir a visualização **passo a passo** do funcionamento interno de uma ampla gama de algoritmos de ordenação, destacando operações como:
 
 - comparações
-- trocas
-- movimentações de elementos
-- estados intermediários do algoritmo
+- trocas e escritas
+- movimentações de elementos flutuantes (chaves)
+- estados intermediários e particionamento de dados (buckets)
 
-Mais do que apenas implementar algoritmos, o projeto foca na construção de uma **arquitetura organizada e extensível**, separando claramente:
+Mais do que apenas implementar algoritmos, o projeto apresenta uma **arquitetura limpa, modular e extensível**, separando:
 
-- lógica dos algoritmos
-- controle de execução
-- renderização gráfica
-
-Cada algoritmo funciona como uma **máquina de estados pausável**, permitindo controle total da execução e da animação.
+- lógica dos algoritmos (Máquinas de Estado)
+- controle de execução multithreaded (Engine)
+- renderização gráfica e métricas (UI)
 
 ---
 
 # 🧠 Estrutura do Projeto
 
-```
+```text
 SortLab/
 ├── src/
 │   ├── algorithms/
 │   │   ├── BubbleSort.java
+│   │   ├── BubbleSortOtimizado.java
+│   │   ├── BucketSort.java
+│   │   ├── HeapSort.java
 │   │   ├── InsertionSort.java
 │   │   ├── MergeSort.java
-│   │   └── SelectionSort.java
+│   │   ├── PivotStrategy.java
+│   │   ├── QuickSort.java
+│   │   ├── RadixSort.java
+│   │   ├── SearchStrategy.java
+│   │   ├── SelectionSort.java
+│   │   └── ShellSort.java
 │   ├── core/
+│   │   ├── PartitionedSort.java
 │   │   ├── SortingAlgorithm.java
 │   │   ├── SortingEngine.java
 │   │   └── StepAction.java
 │   ├── ui/
+│   │   ├── ControlPanel.java
 │   │   ├── MainFrame.java
+│   │   ├── MetricsPanel.java
 │   │   └── SortingPanel.java
 │   ├── util/
-│   │   └── ArrayGenerator.java
+│   │   ├── ArrayGenerator.java
 │   │   └── LinkedStack.java
 │   └── Main.java
 │── Makefile
@@ -63,210 +68,98 @@ O projeto foi dividido em camadas para facilitar **manutenção, expansão e cla
 
 ## 📦 core
 
-### `SortingAlgorithm`
+### `SortingAlgorithm` & `PartitionedSort`
 
-Interface que define o contrato que todos os algoritmos devem seguir.
+Interfaces que definem o contrato da simulação. A interface base (`SortingAlgorithm`) transforma cada algoritmo em uma simulação pausável. A extensão `PartitionedSort` adiciona suporte visual para algoritmos não-comparativos que usam baldes/partições.
 
 Principais métodos:
-
-- `nextStep()` → executa um único passo do algoritmo
-- `isFinished()` → indica se a ordenação terminou
-- `getArray()` → retorna o vetor atual
-- `getActiveIndices()` → índices atualmente envolvidos na operação
-- `getCurrentAction()` → estado atual da execução
-- métricas como comparações e trocas
-
-Essa abordagem transforma os algoritmos em **simulações controladas passo a passo**.
-
----
+- `nextStep()` → executa um único passo lógico do algoritmo.
+- `getActiveIndices()` → índices atualmente sofrendo comparação ou troca.
+- `hasFloatingKey()` / `getFloatingKeyValue()` → suporte para elementos temporariamente fora do array principal (ex: Insertion Sort).
 
 ### `StepAction`
 
-Enum que representa o **estado atual do algoritmo** durante a execução.
-
-Exemplos de estados:
-
-- `INICIADO`
-- `COMPARANDO`
-- `TROCANDO`
-- `FINALIZADO`
-
-
-Esse estado é utilizado pela interface gráfica para **destacar visualmente as operações**.
-
----
+Enum que dita o **estado atual** da simulação frame a frame, permitindo renderização baseada em contexto (ex: pintar de vermelho ao comparar, laranja ao trocar):
+- `INICIADO`, `COMPARANDO`, `TROCANDO`, `FINALIZADO`
 
 ### `SortingEngine`
 
-Responsável por controlar **o motor de execução da simulação**.
-
-Funções principais:
-
-- Executar o algoritmo em **thread separada**
-- Controlar **velocidade da simulação**
-- Sincronizar **atualizações da interface**
-- Garantir execução **suave e pausável**
-
-O motor utiliza:
-
-- `Thread`
-- controle de delay
-- sincronização com a **Swing Event Dispatch Thread**
+O coração da execução. Roda em uma **thread separada**, controlando a taxa de atualização (vSync e delays dinâmicos) e coordenando com a **Swing Event Dispatch Thread (EDT)** para garantir renderizações suaves mesmo em velocidades "Turbo".
 
 ---
 
 ## 🧮 algorithms
-Implementações concretas dos algoritmos de ordenação.
 
-Atualmente:
+Implementações concretas dos algoritmos, desenhados para não travar a thread principal.
 
-- ✔ Bubble Sort
-- ✔ Selection Sort
-- ✔ Insertion Sort 
-- ✔ Merge Sort 
+Atualmente suportados:
+- ✔ **Bubble Sort** (Padrão e Otimizado)
+- ✔ **Selection Sort**
+- ✔ **Insertion Sort** (Estratégias de busca: Sequencial, Binária e Ternária)
+- ✔ **Shell Sort**
+- ✔ **Heap Sort**
+- ✔ **Merge Sort** (Implementação iterativa frame a frame)
+- ✔ **Quick Sort** (Estratégias de pivô: Último, Meio, Mediana de 3)
+- ✔ **Bucket Sort** (Com visualização de partições)
+- ✔ **Radix Sort** (Com visualização de partições)
 
-Cada algoritmo executa **uma única ação por chamada de `nextStep()`**, permitindo controle total da animação.
-
-### Destaques
-
-**Insertion Sort**
-
-- visualização didática do elemento **"chave" flutuando** durante inserção.
-
-**Merge Sort**
-
-- implementação **iterativa**
-- utiliza **pilha explícita** (`LinkedStack`) para simular a árvore de recursão frame a frame.
+### Padrões de Projeto Aplicados
+Uso extensivo do **Strategy Pattern** através de enums (`SearchStrategy`, `PivotStrategy`) para modificar o comportamento interno de algoritmos complexos (Insertion e Quick) de forma limpa.
 
 ---
 
 ## 🛠️ util
 
 ### `LinkedStack`
-
-Implementação própria de uma **pilha encadeada genérica**.
-
-Utilizada principalmente para:
-
-- simular a **call stack de algoritmos recursivos**
-- permitir execução passo a passo sem usar recursão real.
-
----
+Estrutura de dados própria (Pilha Encadeada Genérica). Vital para simular a **call stack** de algoritmos naturalmente recursivos (MergeSort, QuickSort), permitindo a pausa da execução a qualquer momento.
 
 ### `ArrayGenerator`
-
-Responsável por gerar vetores iniciais para teste:
-
-- aleatórios
-- ordenados crescentes
-- ordenados decrescentes
-
-Permite visualizar **diferentes comportamentos dos algoritmos**.
+Módulo responsável por alimentar a Engine com cenários variados: Vetores Aleatórios, Crescentes ou Decrescentes.
 
 ---
   
 ## 🖥️ ui
-Camada responsável pela **interface gráfica** utilizando **Java Swing**.
 
-### `MainFrame`
+Camada de **interface gráfica** utilizando **Java Swing**.
 
-Janela principal da aplicação.
-
-Contém:
-
-- seletor de algoritmo
-- seletor de tipo de vetor
-- controle de tamanho do vetor
-- controle de velocidade
-- botões de execução (Play / Pause / Reset)
-- métricas de execução
+- **`MainFrame`**: Janela principal e orquestradora.
+- **`ControlPanel`**: Painel inferior contendo os seletores (algoritmo, tipo, tamanho) e controles de fluxo (Play, Pause, Reset, Velocidade).
+- **`MetricsPanel`**: Painel superior que contabiliza métricas em tempo real (Comparações e Trocas/Escritas).
+- **`SortingPanel`**: Responsável pela renderização de alto desempenho. Desenha os arrays como barras e suporta layout dividido para renderizar múltiplos buckets independentes simultaneamente em algoritmos como Radix e Bucket Sort.
 
 ---
-
-### `SortingPanel`
-
-Responsável pela **renderização do vetor**.
-
-Cada elemento do array é desenhado como uma **barra vertical**, onde:
-
-- a altura representa o valor
-- cores indicam operações em andamento
-
-O painel consulta continuamente:
-- getArray()
-- getActiveIndices()
-- getCurrentAction()
-para desenhar o estado atual da execução.
-
----
-
 
 # 🚀 Conceitos Aplicados
 
 | Categoria | Aplicação no Projeto |
 |------------|----------------------|
-| Programação Orientada a Objetos | Encapsulamento, interfaces e separação de responsabilidades |
-| Estrutura de Dados | Implementação de pilha encadeada (`LinkedStack`) | 
-| Máquina de Estados | Controle de execução via `StepAction` |
-| Simulação de Recursão | Uso de pilha explícita para manter contexto de execução | 
-| Arquitetura em Camadas | Separação entre lógica, engine e UI |
-| Concorrência | Execução do algoritmo em thread separada |
-| Visualização de Algoritmos | Renderização gráfica passo a passo |
-| Controle de Simulação | Execução via `nextStep()` |
-
+| Orientação a Objetos | Padrões de Projeto (Strategy), Polimorfismo e Interfaces |
+| Estrutura de Dados | Implementação de pilhas genéricas (`LinkedStack`) | 
+| Máquina de Estados | Execução assíncrona orientada a estados (`StepAction`) |
+| Desrecursivação | Pilha explícita para manter contexto de Merge e Quick Sort | 
+| Arquitetura em Camadas | Isolamento estrito entre Domínio, Engine e Interface |
+| Computação Gráfica | Pintura customizada (`paintComponent`), proporções dinâmicas |
+| Análise de Algoritmos | Coleta de métricas em tempo real |
 
 ---
-
-# 🎯 Objetivo do Projeto
-
-Este projeto foi desenvolvido durante o período de férias com o objetivo de:
-
-- Aprofundar o entendimento de **algoritmos de ordenação**
-- Estudar **visualização de algoritmos**
-- Explorar arquitetura limpa em aplicações Java
-- Evoluir progressivamente para uma ferramenta mais robusta
-- Desenvolver um projeto sólido para **portfólio**
-
----
-
 
 ## ⚙️ Como Compilar e Executar
 
-Este projeto utiliza **Makefile** para automatizar a compilação e execução.
+O projeto utiliza **Makefile** para orquestração no ambiente Windows.
 
 ### ✅ 1️⃣ Compilar
 
 Na raiz do projeto:
-
-```bash
-make
-```
-
-ou
-
 ```bash
 make compile
 ```
-
-Isso irá:
-
-- Criar o diretório `bin/` (caso não exista)
-- Compilar todos os arquivos `.java`
-
----
 
 ### ▶ 2️⃣ Executar
 
 ```bash
 make run
 ```
-
-O comando irá:
-
-- Compilar automaticamente (caso necessário)
-- Executar a classe `Main`
-
----
+*(Compila automaticamente caso existam alterações pendentes e executa a aplicação).*
 
 ### 🧹 3️⃣ Limpar Arquivos Compilados
 
@@ -274,41 +167,24 @@ O comando irá:
 make clean
 ```
 
-Remove completamente o diretório `bin/`.
-
----
-
-### 💡 Observação
-
-O `Makefile` atual está configurado para ambiente Windows (uso de `dir`, `mkdir`, `rmdir`).
-
-Em sistemas Linux/macOS será necessário adaptar os comandos.
+*Nota: Para rodar em ambientes Linux/macOS, adapte os comandos do Makefile (`dir`, `mkdir`, `rmdir` para equivalentes Unix).*
 
 ---
 
 ## 📌 Status Atual
 
-- ✔ Estrutura base definida
-
-- ✔ Máquina de estados implementada
-
-- ✔ Pilha para recursão implementada
-
-- ✔ Bubble, Selection, Insertion e Merge funcionais
-
-- ✔ Interface gráfica básica implementada
-
-- 🔄 Melhorias visuais em andamento
-
-- 🔄 Novos algoritmos em planejamento
+- ✔ **Versão 1.0 Finalizada!**
+- ✔ Máquina de estados robusta.
+- ✔ Mais de 13 variações de algoritmos e estratégias mapeadas.
+- ✔ Suporte a métricas em tempo real.
+- ✔ Renderização para ordenações baseadas em distribuição (Radix/Bucket).
+- ✔ Controles avançados de taxa de atualização e velocidade gráfica.
 
 ---
 
 ## 👨‍💻 Autor
 
-**Alexandre Cesar de Souza Rangel**  
-Aluno de Ciência da Computação - UFES Alegre
+**Alexandre Cesar de Souza Rangel** Aluno de Ciência da Computação - UFES Alegre
 
 ---
-
-Projeto pessoal desenvolvido durante o período de férias — 2026.
+*Projeto pessoal desenvolvido durante o período de férias — 2026.*
