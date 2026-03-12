@@ -81,8 +81,12 @@ public class MainFrame extends JFrame {
                 return new BubbleSortOtimizado(array);
             case "Selection Sort":
                 return new SelectionSort(array);
-            case "Insertion Sort":
-                return new InsertionSort(array);
+            case "Insertion Sort (Direta)":
+                return new InsertionSort(array, SearchStrategy.SEQUENTIAL);
+            case "Insertion Sort (Binaria)":
+                return new InsertionSort(array, SearchStrategy.BINARY);
+            case "Insertion Sort (Ternaria)":
+                return new InsertionSort(array, SearchStrategy.TERNARY);
             case "Shell Sort":
                 return new ShellSort(array);
             case "Heap Sort":

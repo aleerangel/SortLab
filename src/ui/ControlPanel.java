@@ -19,7 +19,9 @@ public class ControlPanel extends JPanel {
         algorithmSelector.addItem("Bubble Sort");
         algorithmSelector.addItem("Bubble Sort (Otimizado)");
         algorithmSelector.addItem("Selection Sort");
-        algorithmSelector.addItem("Insertion Sort");
+        algorithmSelector.addItem("Insertion Sort (Direta)");
+        algorithmSelector.addItem("Insertion Sort (Binaria)");
+        algorithmSelector.addItem("Insertion Sort (Ternaria)");
         algorithmSelector.addItem("Shell Sort");
         algorithmSelector.addItem("Heap Sort");
         algorithmSelector.addItem("Merge Sort");
