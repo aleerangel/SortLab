@@ -143,7 +143,7 @@ Camada de **interface gráfica** utilizando **Java Swing**.
 
 ---
 
-## ⚙️ Como Compilar e Executar
+# ⚙️ Como Compilar e Executar
 
 O projeto utiliza **Makefile** para orquestração no ambiente Windows.
 
@@ -154,14 +154,28 @@ Na raiz do projeto:
 make compile
 ```
 
-### ▶ 2️⃣ Executar
+### ▶ 2️⃣ Executar pelo Terminal
 
 ```bash
 make run
 ```
 *(Compila automaticamente caso existam alterações pendentes e executa a aplicação).*
 
-### 🧹 3️⃣ Limpar Arquivos Compilados
+### 📦 3️⃣ Gerar Executável (.jar)
+
+Para criar um arquivo executável universal do Java (ideal para distribuição):
+
+```bash
+make jar
+```
+
+Isso irá gerar um arquivo `SortLab.jar` na raiz do projeto. Para executá-lo, basta **dar um duplo clique** no arquivo gerado, ou rodar o comando:
+
+```bash
+java -jar SortLab.jar
+```
+
+### 🧹 4️⃣ Limpar Arquivos Compilados
 
 ```bash
 make clean
