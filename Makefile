@@ -14,3 +14,6 @@ run: compile
 
 clean:
 	if exist $(BIN_DIR) rmdir /s /q $(BIN_DIR)
+
+jar: compile
+	jar cfe SortLab.jar Main -C $(BIN_DIR) .

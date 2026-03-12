@@ -18,7 +18,8 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setTitle("SortLab");
-        setSize(2560, 1600);
+        setSize(1280, 720);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
